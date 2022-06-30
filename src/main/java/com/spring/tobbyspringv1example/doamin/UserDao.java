@@ -1,15 +1,20 @@
 package com.spring.tobbyspringv1example.doamin;
 
+import com.spring.tobbyspringv1example.dao.ConnectionMaker;
+import com.spring.tobbyspringv1example.dao.SimpleConnectionMaker;
 import com.spring.tobbyspringv1example.dao.User;
 
 import java.sql.*;
 
 public class UserDao {
-    public void add(User user) throws ClassNotFoundException, SQLException {
-        Class.forName("org.mariadb.jdbc.Driver");
-        Connection c = DriverManager.getConnection("jdbc:mariadb://localhost/tobbyspring?characterEncoding=UTF-8", "root",
-                "1234");
+    private ConnectionMaker connectionMaker;
 
+    public UserDao(ConnectionMaker connectionMaker) {
+        this.connectionMaker = connectionMaker;
+    }
+
+    public void add(User user) throws ClassNotFoundException, SQLException {
+        Connection c = connectionMaker.makeConnection();
         PreparedStatement ps = c.prepareStatement(
                 "insert into users(id, name, password) values(?,?,?)");
         ps.setString(1, user.getId());
@@ -24,9 +29,7 @@ public class UserDao {
 
 
     public User get(String id) throws ClassNotFoundException, SQLException {
-        Class.forName("org.mariadb.jdbc.Driver");
-        Connection c = DriverManager.getConnection("jdbc:mariadb://localhost/tobbyspring?characterEncoding=UTF-8", "root",
-                "1234");
+        Connection c = connectionMaker.makeConnection();
         PreparedStatement ps = c
                 .prepareStatement("select * from users where id = ?");
         ps.setString(1, id);
@@ -46,7 +49,8 @@ public class UserDao {
     }
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        UserDao dao = new UserDao();
+        ConnectionMaker connectionMaker = new SimpleConnectionMaker();
+        UserDao dao = new UserDao(connectionMaker);
 
         User user = new User();
         user.setId("whiteship");
