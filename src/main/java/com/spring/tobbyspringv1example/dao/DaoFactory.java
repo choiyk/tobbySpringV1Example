@@ -16,6 +16,7 @@ public class DaoFactory {
 
     @Bean
     public ConnectionMaker connectionMaker() {
+        //다른 기능으로 변경해야 할 때 이 부분을 새로운 ConnectionMaker 구현 클래스로 변경하면 된다.
         return new SimpleConnectionMaker();
     }
 }

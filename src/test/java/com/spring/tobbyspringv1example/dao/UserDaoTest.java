@@ -1,14 +1,12 @@
-package com.spring.tobbyspringv1example;
+package com.spring.tobbyspringv1example.dao;
 
-import com.spring.tobbyspringv1example.dao.DaoFactory;
-import com.spring.tobbyspringv1example.dao.User;
 import com.spring.tobbyspringv1example.doamin.UserDao;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.sql.SQLException;
 
-public class UserdaoTest {
+public class UserDaoTest {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         /*
         애플리케이션 컨텍스트 : 빈 팩토리를 확장한 IoC 컨테이너.(빈 팩토리 + 스프링이 제공하는 부가 서비스)
