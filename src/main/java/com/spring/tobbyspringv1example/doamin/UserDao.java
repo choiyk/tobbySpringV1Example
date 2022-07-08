@@ -14,7 +14,13 @@ public class UserDao {
      */
     private ConnectionMaker connectionMaker;
 
+    /* 생성자를 이용한 의존관계 주입
     public UserDao(ConnectionMaker connectionMaker) {
+        this.connectionMaker = connectionMaker;
+    }
+     */
+    //수정자 메소드를 이용한 의존관계 주입
+    public void setConnectionMaker(ConnectionMaker connectionMaker) {
         this.connectionMaker = connectionMaker;
     }
 

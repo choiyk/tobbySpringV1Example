@@ -10,7 +10,9 @@ public class DaoFactory {
     @Bean   //빈 : 스프링이 IoC 방식으로 관리하는 오브젝트.
     public UserDao userDao() {
         ConnectionMaker connectionMaker = connectionMaker();
-        UserDao dao = new UserDao(connectionMaker);
+        //UserDao dao = new UserDao(connectionMaker);
+        UserDao dao = new UserDao();
+        dao.setConnectionMaker(connectionMaker);
         return dao;
     }
 
