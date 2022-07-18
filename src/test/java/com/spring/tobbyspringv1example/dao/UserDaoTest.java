@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(SpringExtension.class)  //Junit 프레임워크의 테스트 실행 방법을 확장.
-@ContextConfiguration(locations = "/ApplicationContext.xml")    //자동으로 만들어줄 애플리케이션 컨텍스트의 설정파일 위치 지정.
+@ContextConfiguration(locations = "/test-ApplicationContext.xml")    //자동으로 만들어줄 애플리케이션 컨텍스트의 설정파일 위치 지정.
 public class UserDaoTest {
 
     @Autowired private ApplicationContext context;
