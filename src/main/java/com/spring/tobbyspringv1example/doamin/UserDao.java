@@ -1,9 +1,6 @@
 package com.spring.tobbyspringv1example.doamin;
 
-import com.spring.tobbyspringv1example.dao.ConnectionMaker;
-import com.spring.tobbyspringv1example.dao.DaoFactory;
-import com.spring.tobbyspringv1example.dao.SimpleConnectionMaker;
-import com.spring.tobbyspringv1example.dao.User;
+import com.spring.tobbyspringv1example.dao.*;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import javax.sql.DataSource;
@@ -73,29 +70,77 @@ public class UserDao {
     }
 
     public int getCount() throws SQLException {
-        Connection c = dataSource.getConnection();
-        PreparedStatement ps = c
-                .prepareStatement("select count(*) from users");
+        Connection c = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-        ResultSet rs = ps.executeQuery();
-        rs.next();
-        int count = rs.getInt(1);
+        try{
+            c = dataSource.getConnection();
 
-        rs.close();
-        ps.close();
-        c.close();
+            ps = c.prepareStatement("select count(*) from users");
 
-        return count;
+            rs = ps.executeQuery();
+            rs.next();
+            return rs.getInt(1);
+        }
+        catch (SQLException e) {
+            throw e;
+        }
+        finally {
+            if(rs != null) {
+                try {
+                    rs.close();
+                }
+                catch (SQLException e) {}
+            }
+            if(ps != null) {
+                try {
+                    ps.close();
+                }
+                catch (SQLException e) {}
+            }
+            if(c != null) {
+                try {
+                    c.close();
+                }
+                catch (SQLException e) {}
+            }
+        }
     }
 
     public void deleteAll() throws SQLException {
-        Connection c = dataSource.getConnection();
-        PreparedStatement ps = c
-                .prepareStatement("delete from users");
+        StatementStrategy st = new DeleteAllStatement();    //전략 선정
+        jdbcContextWithStatementStrategy(st);   //컨텍스트 호출, 전략 오브젝트 전달
+    }
+    
+    //변하지 않는 공통 부분 = context
+    public void jdbcContextWithStatementStrategy(StatementStrategy stmt) throws SQLException {
+        Connection c = null;
+        PreparedStatement ps = null;
 
-        ps.executeQuery();
+        try{
+            c = dataSource.getConnection();
 
-        ps.close();
-        c.close();
+            ps = stmt.makePreparedStatement(c);
+
+            ps.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw e;
+        }
+        finally {
+            if(ps != null) {
+                try {
+                    ps.close();
+                }
+                catch (SQLException e) {}
+            }
+            if(c != null) {
+                try {
+                    c.close();
+                }
+                catch (SQLException e) {}
+            }
+        }
     }
 }
