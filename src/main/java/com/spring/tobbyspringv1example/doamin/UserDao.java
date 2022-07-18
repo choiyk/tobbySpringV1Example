@@ -11,8 +11,8 @@ public class UserDao {
     스프링의 싱글톤 빈으로 사용되는 클래스를 만들 때는 개별적으로 바뀌는 정보는 로컬 변수로 정의하거나, 파라미터로 주고받으면서 시용하게 해야 한다.
     자신이 사용하는 다른 싱글톤 빈을 저장하려는 용도라면 인스턴스 변수를 사용해도 좋다.
      */
-    private ConnectionMaker connectionMaker;
     private DataSource dataSource;
+    private JdbcContext jdbcContext;
 
     /* 생성자를 이용한 의존관계 주입
     public UserDao(ConnectionMaker connectionMaker) {
@@ -20,13 +20,11 @@ public class UserDao {
     }
      */
     //수정자 메소드를 이용한 의존관계 주입
-    public void setConnectionMaker(ConnectionMaker connectionMaker) {
-        this.connectionMaker = connectionMaker;
-    }
-
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
+
+    public void setJdbcContext(JdbcContext jdbcContext) {this.jdbcContext = jdbcContext;}
 
     public void add(final User user) throws SQLException {
         StatementStrategy st = new StatementStrategy() {
@@ -41,7 +39,7 @@ public class UserDao {
                 return ps;
             }
         };
-        jdbcContextWithStatementStrategy(st);
+        jdbcContext.workWithStatementStrategy(st);
     }
 
 
@@ -113,43 +111,12 @@ public class UserDao {
         /*StatementStrategy st = new DeleteAllStatement();    //전략 선정
         jdbcContextWithStatementStrategy(st);   //컨텍스트 호출, 전략 오브젝트 전달*/
 
-        jdbcContextWithStatementStrategy(new StatementStrategy() {
+        jdbcContext.workWithStatementStrategy(new StatementStrategy() {
             @Override
             public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
                 PreparedStatement ps = c.prepareStatement("delete from users");
                 return ps;
             }
         });
-    }
-    
-    //변하지 않는 공통 부분 = context
-    public void jdbcContextWithStatementStrategy(StatementStrategy stmt) throws SQLException {
-        Connection c = null;
-        PreparedStatement ps = null;
-
-        try{
-            c = dataSource.getConnection();
-
-            ps = stmt.makePreparedStatement(c);
-
-            ps.executeUpdate();
-        }
-        catch (SQLException e) {
-            throw e;
-        }
-        finally {
-            if(ps != null) {
-                try {
-                    ps.close();
-                }
-                catch (SQLException e) {}
-            }
-            if(c != null) {
-                try {
-                    c.close();
-                }
-                catch (SQLException e) {}
-            }
-        }
     }
 }
