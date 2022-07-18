@@ -28,8 +28,19 @@ public class UserDao {
         this.dataSource = dataSource;
     }
 
-    public void add(User user) throws SQLException {
-        StatementStrategy st = new AddStatement(user);
+    public void add(final User user) throws SQLException {
+        StatementStrategy st = new StatementStrategy() {
+            @Override
+            public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+                PreparedStatement ps = c.prepareStatement(
+                        "insert into users(id, name, password) values(?,?,?)");
+                ps.setString(1, user.getId());
+                ps.setString(2, user.getName());
+                ps.setString(3, user.getPassword());
+
+                return ps;
+            }
+        };
         jdbcContextWithStatementStrategy(st);
     }
 
@@ -99,8 +110,16 @@ public class UserDao {
     }
 
     public void deleteAll() throws SQLException {
-        StatementStrategy st = new DeleteAllStatement();    //전략 선정
-        jdbcContextWithStatementStrategy(st);   //컨텍스트 호출, 전략 오브젝트 전달
+        /*StatementStrategy st = new DeleteAllStatement();    //전략 선정
+        jdbcContextWithStatementStrategy(st);   //컨텍스트 호출, 전략 오브젝트 전달*/
+
+        jdbcContextWithStatementStrategy(new StatementStrategy() {
+            @Override
+            public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+                PreparedStatement ps = c.prepareStatement("delete from users");
+                return ps;
+            }
+        });
     }
     
     //변하지 않는 공통 부분 = context
