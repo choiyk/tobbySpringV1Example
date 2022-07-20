@@ -112,7 +112,7 @@ public class UserDao {
         /*StatementStrategy st = new DeleteAllStatement();    //전략 선정
         jdbcContextWithStatementStrategy(st);   //컨텍스트 호출, 전략 오브젝트 전달*/
 
-        jdbcContext.workWithStatementStrategy(new StatementStrategy() {
+        jdbcContext.workWithStatementStrategy(new StatementStrategy() { //익명 내부 클래스로 만들어지는 오브젝트 = 콜백
             @Override
             public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
                 PreparedStatement ps = c.prepareStatement("delete from users");

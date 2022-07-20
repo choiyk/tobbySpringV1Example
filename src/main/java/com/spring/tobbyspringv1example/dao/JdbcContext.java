@@ -13,7 +13,7 @@ public class JdbcContext {
         this.dataSource = dataSource;
     }
 
-    //변하지 않는 공통 부분 = context
+    //변하지 않는 공통 부분 = context = 템플릿
     public void workWithStatementStrategy(StatementStrategy stmt) throws SQLException {
         Connection c = null;
         PreparedStatement ps = null;
