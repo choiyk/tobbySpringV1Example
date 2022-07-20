@@ -43,4 +43,14 @@ public class JdbcContext {
             }
         }
     }
+
+    //클라이언트
+    public void executeSql(final String query) throws SQLException {
+        workWithStatementStrategy(new StatementStrategy() { //콜백
+            @Override
+            public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+                return c.prepareStatement(query);
+            }
+        });
+    }
 }
