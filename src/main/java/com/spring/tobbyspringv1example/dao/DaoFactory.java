@@ -1,6 +1,7 @@
 package com.spring.tobbyspringv1example.dao;
 
 import com.spring.tobbyspringv1example.doamin.UserDao;
+import com.spring.tobbyspringv1example.doamin.UserDaoJdbc;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
@@ -14,7 +15,7 @@ public class DaoFactory {
     public UserDao userDao() {
         //ConnectionMaker connectionMaker = connectionMaker();
         //UserDao dao = new UserDao(connectionMaker);
-        UserDao dao = new UserDao();
+        UserDaoJdbc dao = new UserDaoJdbc();
         //dao.setConnectionMaker(connectionMaker);
         dao.setDataSource(dataSource());
         return dao;
