@@ -6,7 +6,8 @@
     <bean id="connectionMaker" class="com.spring.tobbyspringv1example.user.dao.SimpleConnectionMaker"/>
     <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
         <property name="driverClass" value="org.mariadb.jdbc.Driver"/>
-        <property name="url" value="jdbc:mariadb://localhost/testdb?characterEncoding=UTF-8"/>
+        <!--<property name="url" value="jdbc:mariadb://localhost/testdb?characterEncoding=UTF-8"/>-->
+        <property name="url" value="jdbc:mariadb://localhost/tobbyspring?characterEncoding=UTF-8"/>
         <property name="username" value="root"/>
         <property name="password" value="1234"/>
     </bean>

@@ -1,6 +1,7 @@
 package com.spring.tobbyspringv1example.dao;
 
 import com.spring.tobbyspringv1example.user.dao.UserDao;
+import com.spring.tobbyspringv1example.user.domain.Level;
 import com.spring.tobbyspringv1example.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,9 +45,9 @@ public class UserDaoTest {
         //ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
         ApplicationContext context = new GenericXmlApplicationContext("ApplicationContext.xml"); */
 
-        this.user1 = new User("gyumee", "박성철", "springno1");
-        this.user2 = new User("leegw700", "이길원", "springno2");
-        this.user3 = new User("bumjin", "박범진", "springno3");
+        this.user1 = new User("gyumee", "박성철", "springno1", Level.BASIC, 1, 0);
+        this.user2 = new User("leegw700", "이길원", "springno2", Level.SILVER, 55, 10);
+        this.user3 = new User("bumjin", "박범진", "springno3", Level.GOLD, 100, 40);
     }
 
     @Test
@@ -59,12 +60,10 @@ public class UserDaoTest {
         assertEquals(dao.getCount(), 2);
 
         User userget1 = dao.get(user1.getId());
-        assertEquals(userget1.getName(), user1.getName());
-        assertEquals(userget1.getPassword(), user1.getPassword());
+        checkSameUser(userget1, user1);
 
         User userget2 = dao.get(user2.getId());
-        assertEquals(userget2.getName(), user2.getName());
-        assertEquals(userget2.getPassword(), user2.getPassword());
+        checkSameUser(userget2, user2);
     }
 
     @Test
@@ -145,5 +144,8 @@ public class UserDaoTest {
         assertEquals(user1.getId(), user2.getId());
         assertEquals(user1.getName(), user2.getName());
         assertEquals(user1.getPassword(), user2.getPassword());
+        assertEquals(user1.getLevel(), user2.getLevel());
+        assertEquals(user1.getLogin(), user2.getLogin());
+        assertEquals(user1.getRecommend(), user2.getRecommend());
     }
 }
