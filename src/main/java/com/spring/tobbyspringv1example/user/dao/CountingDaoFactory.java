@@ -1,7 +1,5 @@
-package com.spring.tobbyspringv1example.dao;
+package com.spring.tobbyspringv1example.user.dao;
 
-import com.spring.tobbyspringv1example.doamin.UserDao;
-import com.spring.tobbyspringv1example.doamin.UserDaoJdbc;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

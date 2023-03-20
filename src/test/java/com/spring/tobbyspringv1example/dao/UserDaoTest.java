@@ -1,6 +1,7 @@
 package com.spring.tobbyspringv1example.dao;
 
-import com.spring.tobbyspringv1example.doamin.UserDao;
+import com.spring.tobbyspringv1example.user.dao.UserDao;
+import com.spring.tobbyspringv1example.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

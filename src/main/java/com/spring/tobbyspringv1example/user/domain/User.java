@@ -1,4 +1,4 @@
-package com.spring.tobbyspringv1example.dao;
+package com.spring.tobbyspringv1example.user.domain;
 
 public class User {
     String id;

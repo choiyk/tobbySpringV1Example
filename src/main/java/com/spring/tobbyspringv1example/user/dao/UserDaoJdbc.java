@@ -1,6 +1,6 @@
-package com.spring.tobbyspringv1example.doamin;
+package com.spring.tobbyspringv1example.user.dao;
 
-import com.spring.tobbyspringv1example.dao.User;
+import com.spring.tobbyspringv1example.user.domain.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 

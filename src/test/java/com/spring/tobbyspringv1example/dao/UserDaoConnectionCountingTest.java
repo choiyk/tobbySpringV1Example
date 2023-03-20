@@ -1,7 +1,10 @@
 package com.spring.tobbyspringv1example.dao;
 
-import com.spring.tobbyspringv1example.doamin.UserDao;
-import com.spring.tobbyspringv1example.doamin.UserDaoJdbc;
+import com.spring.tobbyspringv1example.user.dao.CountingConnectionMaker;
+import com.spring.tobbyspringv1example.user.dao.CountingDaoFactory;
+import com.spring.tobbyspringv1example.user.dao.UserDao;
+import com.spring.tobbyspringv1example.user.dao.UserDaoJdbc;
+import com.spring.tobbyspringv1example.user.domain.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

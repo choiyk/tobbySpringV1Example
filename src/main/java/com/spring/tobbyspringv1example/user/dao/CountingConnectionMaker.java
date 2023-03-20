@@ -1,9 +1,9 @@
-package com.spring.tobbyspringv1example.dao;
+package com.spring.tobbyspringv1example.user.dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class CountingConnectionMaker implements  ConnectionMaker {
+public class CountingConnectionMaker implements ConnectionMaker {
 
     int counter = 0;
     private ConnectionMaker realConnectionMaker;
